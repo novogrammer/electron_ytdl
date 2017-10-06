@@ -12,5 +12,5 @@ electron_ytdl
 ##実行
     npm run start
 
-##実行
+##パッケージ作成
     npm run build
