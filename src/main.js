@@ -10,8 +10,25 @@ const os = require('os');
 
 const fs = require('fs');
 const ytdl = require('ytdl-core');
+const sanitize = require('sanitize-filename');
 
 let mainWindow=null;
+
+function download(url){
+  return new Promise((resolve,reject)=>{
+    let home=os.homedir();
+    let params={
+      get_video_info: true,
+      filter: function(format) { return format.container === 'mp4'; },
+    };
+    let stream=ytdl(url, params);
+    stream.on('end',resolve)
+    .on('info',(info, format)=>{
+      let filename=sanitize(info.title+'.mp4');
+      stream.pipe(fs.createWriteStream(home+'/Downloads/'+filename));
+    });
+  });
+}
 
 function createWindow () {
   mainWindow = new BrowserWindow({width: 800, height: 600});
@@ -26,15 +43,18 @@ function createWindow () {
     shell.openExternal(url);
   });
   
-  {
-    let home=os.homedir();
-    let url='http://www.youtube.com/watch?v=A02s8omM_hI';
-    ytdl(url, { filter: function(format) { return format.container === 'mp4'; } })
-    .pipe(fs.createWriteStream(home+'/Downloads/video.mp4'));
-  }
-  
-  
   //mainWindow.webContents.openDevTools();
+  ipcMain.on('download',function(e,url){
+    download(url)
+    .then(()=>{
+      e.sender.send('complete');
+    })
+    .catch((reason)=>{
+      e.sender.send('error',reason.message);
+    });
+  });
+
+  
 
   //mainWindow.on('closed', function () {
   //  mainWindow = null;

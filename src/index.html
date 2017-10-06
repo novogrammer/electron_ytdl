@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>title</title>
+  <title>electron_ytdl</title>
   <script>
     require("./renderer.js");
   </script>
@@ -14,9 +14,26 @@
     text-align: center;
     font-size:60px;
   }
+  #Main{
+    text-align: center;
+  }
+  .downloading{
+    color:red;
+    display:none;
+  }
+  input[type=text]{
+    font-size:20px;
+  }
+  input[type=button],button{
+    font-size:20px;
+  }
   </style>
 </head>
 <body>
-  <h1>hello</h1>
+  <h1>electron_ytdl</h1>
+  <div id="Main">
+    <input type="text" size="40" name="url"><button name="download">download</button>
+    <p class="downloading">downloading...</p>
+  </div>
 </body>
 </html>
