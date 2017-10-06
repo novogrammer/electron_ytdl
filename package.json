@@ -1,0 +1,22 @@
+{
+  "name": "electron_ytdl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . --out bin --platform=darwin --arch=x64 --tmpdir=false --overwrite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "novogrammer@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^1.6.11",
+    "electron-packager": "^8.7.2"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "sanitize-filename": "^1.6.1",
+    "ytdl-core": "^0.17.1"
+  }
+}
